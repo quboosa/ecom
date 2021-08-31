@@ -32,7 +32,7 @@ export default {
             image: 'images/shirt-1.jpg',
             price: 60,
             brand: 'Shirt Company',
-            rating: 4.5,
+            rating: 2.5,
             numReviews: 10,
             countInStock: 6,
 

@@ -104,3 +104,13 @@ footer {
     font-size: 1.2rem;
     color: darkgray;
 }
+
+/* rating */
+.rating  {
+    color: gold;
+    font-size: 1.4rem;
+}
+
+.rating span:last-child {
+    color: black;
+}
