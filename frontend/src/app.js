@@ -6,8 +6,8 @@ import { parseRequestUrl } from "./utils.js";
 const routes = {
     "/": HomeScreen,
     "/product/:id": ProductsScreen,
-
 }
+
 const router = async () => {
     const request = parseRequestUrl();
 
