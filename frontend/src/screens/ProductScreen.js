@@ -3,6 +3,14 @@ import Rating from "../components/rating.js";
 import { parseRequestUrl } from "../utils.js";
 
 const ProductsScreen = {
+    after_render: () => {
+        const request = parseRequestUrl();
+        // console.log(request);
+        document.getElementById("add-button").addEventListener("click", () => {
+            document.location.hash = `/cart/${request.id}`;
+        })
+    },
+
     render: async () => {
         const request = parseRequestUrl();
         const product = await getProduct(request.id);
@@ -10,7 +18,7 @@ const ProductsScreen = {
         if (product.error)
             return `<div>${product.error}</div>`;
 
-        console.log("product" + product);
+        // console.log("product" + product);
         return `
         <div class="content">
             <div class="back-to-result">
