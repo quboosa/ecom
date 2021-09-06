@@ -20,9 +20,8 @@ const addToCart = (item, forceUpdate = false) => {
     if (forceUpdate)
         rerender(CartScreen);
 }
-const removeFromCart = id => {
-
-}
+// const removeFromCart = id => {
+// }
 
 const CartScreen = {
     after_render: () => {
@@ -45,6 +44,10 @@ const CartScreen = {
                 document.location.hash = "/cart";
                 rerender(CartScreen);
             })
+        })
+
+        document.getElementById("checkout-button").addEventListener("click", e => {
+            document.location.hash = "/signin";
         })
     },
 
