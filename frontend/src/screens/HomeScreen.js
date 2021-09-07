@@ -4,7 +4,7 @@ const HomeScreen = {
     render: async () => {
         const response = await fetch("http://localhost:3000/api/products", {
             headers: {
-                "Content-Type": "application / json",
+                "Content-Type": "application/json",
             },
         });
 
