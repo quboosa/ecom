@@ -1,6 +1,6 @@
 import { register } from "../api.js";
 import { getUserInfo, setUserInfo } from "../localStorage.js";
-import { hideLoading, showLoading, showMessage } from "../utils.js";
+import { hideLoading, redirectUser, showLoading, showMessage } from "../utils.js";
 
 const RegisterScreen = {
     after_render: () => {
@@ -18,14 +18,16 @@ const RegisterScreen = {
             // alert(data.error);
             else {
                 setUserInfo(data);
-                document.location.hash = "/";
+                redirectUser();
             }
         });
     },
 
     render: () => {
         if (getUserInfo().name) {
-            document.location.hash = "/";
+            // Chnage to redirectUser() ? Also in signinScreen.js
+            redirectUser();
+            // document.location.hash = "/";
         }
 
         return `
@@ -54,6 +56,11 @@ const RegisterScreen = {
                     <li>
                         <button type = "submit" class = "primary">Register</button>
                     </li>
+                    </li>
+                    <div>Already have an account?
+                        <a href = "/#/signin">Sign In</a>
+                    </div>
+                </li>
                    
                 </ul>
             </form>

@@ -47,6 +47,7 @@ const CartScreen = {
         })
 
         document.getElementById("checkout-button").addEventListener("click", e => {
+            // if name inlocalStorage -> paymentScreen ?
             document.location.hash = "/signin";
         })
     },
