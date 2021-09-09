@@ -67,7 +67,7 @@ userRouter.post("/register", expressAsyncHandler(async (req, res) => {
     }
 }));
 
-userRouter.put("/:id", isAuth, expressAsyncHandler(async (req, res) => {
+userRouter.put("/:id/pay", isAuth, expressAsyncHandler(async (req, res) => {
     console.log(req.params.id);
     const user = await User.findById(req.params.id);
     if (!user) {

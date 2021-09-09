@@ -15,17 +15,21 @@ export const generateToken = (user) => {
 
 export const isAuth = (req, res, next) => {
     const bearerToken = req.headers.authorization;
-    if (!bearerToken)
+    if (!bearerToken) {
         res.status(401).send({ message: "No Token supplied" });
+    }
     else {
         const token = bearerToken.slice(7, bearerToken.length);
         jwt.verify(token, config.JWT_SECRET, (err, data) => {
             if (err)
                 res.status(401).send({ message: "Invalid token" });
             else {
-                res.user = data;
+                console.log("test");
+                req.user = data;
+                // res.user = data;
+                // console.log(req.user);
                 next();
-            }
-        })
-    }
-}
+            };
+        });
+    };
+};

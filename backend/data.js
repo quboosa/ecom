@@ -2,7 +2,7 @@ export default {
     // const products = [
     products: [
         {
-            _id: '1',
+            _id: '111111111111111111111111',
             name: 'Product 1',
             category: 'Shirts',
             image: 'images/shirt-1.jpg',
@@ -14,7 +14,7 @@ export default {
 
         },
         {
-            _id: '2',
+            _id: '222222222222222222222222',
             name: 'Product 2',
             category: 'Shirts',
             image: 'images/shirt-1.jpg',
@@ -26,7 +26,7 @@ export default {
 
         },
         {
-            _id: '3',
+            _id: '333333333333333333333333',
             name: 'Product 3',
             category: 'Shirts',
             image: 'images/shirt-1.jpg',
@@ -38,7 +38,7 @@ export default {
 
         },
         {
-            _id: '4',
+            _id: '444444444444444444444444',
             name: 'Product 4',
             category: 'Shirts',
             image: 'images/shirt-1.jpg',
@@ -50,7 +50,7 @@ export default {
 
         },
         {
-            _id: '5',
+            _id: '555555555555555555555555',
             name: 'Product 5',
             category: 'Shirts',
             image: 'images/shirt-1.jpg',
@@ -62,7 +62,7 @@ export default {
 
         },
         {
-            _id: '6',
+            _id: '666666666666666666666666',
             name: 'Product 6',
             category: 'Shirts',
             image: 'images/shirt-1.jpg',

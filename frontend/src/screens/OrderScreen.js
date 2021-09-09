@@ -1,67 +1,41 @@
-import { createOrder } from "../api.js";
-import CheckoutSteps from "../components/CheckoutSteps.js";
-import { cleanCart, getCartItems, getPayment, getShipping } from "../localStorage.js";
-import { hideLoading, showLoading, showMessage } from "../utils.js";
+import { getOrder, payOrder } from "../api.js";
+import { parseRequestUrl, rerender, showMessage } from "../utils.js";
 
-const convertCartToOrder = () => {
-    const orderItems = getCartItems();
-    if (orderItems.length === 0)
-        document.location.hash = "/";
-
-    const shippingInfo = getShipping();
-    if (!shippingInfo.address)
-        document.location.hash = "/shipping";
-
-    const paymentInfo = getPayment();
-    if (!paymentInfo.paymentMethod)
-        document.location.hash = "/payment";
-
-    const itemsPrice = orderItems.reduce((a, c) => a + c.qty * c.price, 0)
-    const shippingPrice = itemsPrice > 100 ? 0 : 10;
-    const taxPrice = Math.round(itemsPrice * 0.15);
-    const totalPrice = itemsPrice + shippingPrice + taxPrice;
-
-    return {
-        orderItems,
-        shippingInfo,
-        paymentInfo,
-        itemsPrice,
-        shippingPrice,
-        taxPrice,
-        totalPrice
-    };
-};
-
-const PlaceOrderScreen = {
+const OrderScreen = {
     after_render: async () => {
-        document.getElementById("placeorder-button").addEventListener("click", async () => {
-            const order = convertCartToOrder();
-            showLoading();
-            const data = await createOrder(order);
-            hideLoading();
-            if (data.error)
-                showMessage(data.error);
+        document.getElementById("pay-button").addEventListener("click", async () => {
+            const orderId = parseRequestUrl().id;
+            const paymentResult = {
+                payerId: orderId,
+                payementId: orderId,
+                orderId: orderId,
+            };
+            const response = await payOrder(orderId, paymentResult);
+            if (!response.error)
+                rerender(OrderScreen);
             else {
-                cleanCart();
-                document.location.hash = "/order/" + data.order._id;
+                showMessage(response.error);
             }
         });
     },
 
-    render: () => {
-        const { orderItems, shippingInfo, paymentInfo, itemsPrice, shippingPrice, taxPrice, totalPrice } = convertCartToOrder();
+    render: async () => {
+        const request = parseRequestUrl();
+        const { _id, shippingInfo, paymentInfo, orderItems, itemsPrice, shippingPrice, taxPrice, totalPrice, isDelivered, deliveredOn, isPaid, paidOn } = await getOrder(request.id);
         return `
         <div>
-            ${CheckoutSteps.render({ step1: true, step2: true, step3: true, step4: true })}
+        <h1>Order ${_id}</h1>
             <div class="order">
                 <div class="order-info">
                     <div>
                         <h2>Shipping</h2>
                         <div>${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}</div>
+                        ${isDelivered ? `<div class="success">Delivered On ${deliveredOn}</div>` : `<div class="error">Not Delivered</div>`}
                     </div>
                     <div>
                         <h2>Payment Info</h2> 
                         <div>Payment Method : ${paymentInfo.paymentMethod}</div>
+                        ${isPaid ? `<div class="success">Delivered On ${paidOn}</div>` : `<div class="error">Not Paid</div>`}
                     </div>
                     <div>
                         <ul class="cart-list-container">
@@ -103,7 +77,9 @@ const PlaceOrderScreen = {
                     <li class="total">
                         <div>Total</div><div>$${totalPrice}</div>
                     </li>
-                    <button class="primary fw" type="button" id="placeorder-button">Place Order</button>
+                    <li>
+                        <button type="button" class="primary fw" id="pay-button">Pay Now</button>
+                    </li>
                 </ul
             </div>
         </div>
@@ -111,4 +87,4 @@ const PlaceOrderScreen = {
     }
 };
 
-export default PlaceOrderScreen;
+export default OrderScreen;
