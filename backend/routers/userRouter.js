@@ -67,8 +67,7 @@ userRouter.post("/register", expressAsyncHandler(async (req, res) => {
     }
 }));
 
-userRouter.put("/:id/pay", isAuth, expressAsyncHandler(async (req, res) => {
-    console.log(req.params.id);
+userRouter.put("/:id", isAuth, expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
     if (!user) {
         res.status(404).send({ message: "Invalid user data" });

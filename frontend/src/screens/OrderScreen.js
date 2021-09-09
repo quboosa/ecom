@@ -3,6 +3,8 @@ import { parseRequestUrl, rerender, showMessage } from "../utils.js";
 
 const OrderScreen = {
     after_render: async () => {
+        if (!document.getElementById("pay-button"))
+            return;
         document.getElementById("pay-button").addEventListener("click", async () => {
             const orderId = parseRequestUrl().id;
             const paymentResult = {
@@ -11,10 +13,11 @@ const OrderScreen = {
                 orderId: orderId,
             };
             const response = await payOrder(orderId, paymentResult);
-            if (!response.error)
-                rerender(OrderScreen);
+            if (!response.error) {
+                await rerender(OrderScreen);
+            }
             else {
-                showMessage(response.error);
+                showMessage(response.error)
             }
         });
     },
@@ -77,9 +80,7 @@ const OrderScreen = {
                     <li class="total">
                         <div>Total</div><div>$${totalPrice}</div>
                     </li>
-                    <li>
-                        <button type="button" class="primary fw" id="pay-button">Pay Now</button>
-                    </li>
+                    ${!isPaid ? ` <li> <button type="button" class="primary fw" id="pay-button">Pay Now</button> </li> ` : ``}
                 </ul
             </div>
         </div>

@@ -149,6 +149,7 @@ export const payOrder = async (orderId, paymentResult) => {
         const { token } = getUserInfo();
         const response = await axios({
             url: `${apiUrl}/api/orders/${orderId}/pay`,
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
