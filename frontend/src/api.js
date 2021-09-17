@@ -166,3 +166,25 @@ export const payOrder = async (orderId, paymentResult) => {
         return { error: error.response ? error.response.data.message : error.message };
     }
 }
+
+export const getMyOrders = async () => {
+    const { token } = getUserInfo();
+    try {
+        const response = await axios({
+            url: `${apiUrl}/api/orders/mine`,
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (response.statusText != "OK")
+            throw new Error(response.data.mesage);
+        else
+            return response.data;
+    }
+    catch (error) {
+        return { error: error.response ? error.response.data.message : error.message };
+    }
+}
