@@ -61,11 +61,6 @@ const ProfileScreen = {
                             <li>
                                 <button type = "button" id="signout-button">Sign Out</button>
                             </li>
-                            </li>
-                                <div>Already have an account?
-                                    <a href = "/#/signin">Sign In</a>
-                                </div>
-                            </li>
                         </ul>
                     </form>
                 </div>
