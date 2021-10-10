@@ -1,30 +1,53 @@
-import { getOrder, payOrder } from "../api.js";
-import { parseRequestUrl, rerender, showMessage } from "../utils.js";
+import { deliverOrder, getOrder, payOrder } from "../api.js";
+import { getUserInfo } from "../localStorage.js";
+import { hideLoading, parseRequestUrl, rerender, showLoading, showMessage } from "../utils.js";
 
 const OrderScreen = {
     after_render: async () => {
-        if (!document.getElementById("pay-button"))
-            return;
-        document.getElementById("pay-button").addEventListener("click", async () => {
-            const orderId = parseRequestUrl().id;
-            const paymentResult = {
-                payerId: orderId,
-                payementId: orderId,
-                orderId: orderId,
-            };
-            const response = await payOrder(orderId, paymentResult);
-            if (!response.error) {
-                await rerender(OrderScreen);
-            }
-            else {
-                showMessage(response.error)
-            }
-        });
+        const payButton = document.getElementById("pay-button");
+        const deliverButton = document.getElementById("deliver-order-button");
+
+        if (payButton) {
+            payButton.addEventListener("click", async () => {
+                const orderId = parseRequestUrl().id;
+                const paymentResult = {
+                    payerId: orderId,
+                    payementId: orderId,
+                    orderId: orderId,
+                };
+                const response = await payOrder(orderId, paymentResult);
+                if (!response.error) {
+                    await rerender(OrderScreen);
+                }
+                else {
+                    showMessage(response.error)
+                }
+            });
+        }
+
+        if (deliverButton) {
+            deliverButton.addEventListener("click", async () => {
+                console.log("del but");
+                showLoading();
+                const orderId = parseRequestUrl().id;
+                const response = await deliverOrder(orderId);
+                hideLoading();
+                showMessage("Order Delivered");
+                if (!response.error) {
+                    await rerender(OrderScreen);
+                }
+                else {
+                    showMessage(response.error)
+                }
+            });
+        }
     },
 
     render: async () => {
         const request = parseRequestUrl();
+        const { isAdmin } = getUserInfo();
         const { _id, shippingInfo, paymentInfo, orderItems, itemsPrice, shippingPrice, taxPrice, totalPrice, isDelivered, deliveredOn, isPaid, paidOn } = await getOrder(request.id);
+        console.log('isdelivered', isDelivered);
         return `
         <div>
         <h1>Order ${_id}</h1>
@@ -81,6 +104,7 @@ const OrderScreen = {
                         <div>Total</div><div>$${totalPrice}</div>
                     </li>
                     ${!isPaid ? ` <li> <button type="button" class="primary fw" id="pay-button">Pay Now</button> </li> ` : ``}
+                    ${isPaid && !isDelivered && isAdmin ? ` <li> <button type="button" class="primary fw" id="deliver-order-button">Deliver Order</button> </li> ` : ``}
                 </ul
             </div>
         </div>

@@ -1,10 +1,14 @@
 import Header from "./components/Header.js";
 import CartScreen from "./screens/CartScreen.js";
+import DashboardScreen from "./screens/DashboardScreen.js";
 import Error404Screen from "./screens/Error404Screen.js";
 import HomeScreen from "./screens/HomeScreen.js";
+import OrderListScreen from "./screens/OrderListScreen.js";
 import OrderScreen from "./screens/OrderScreen.js";
 import PaymentScreen from "./screens/PaymentScreen.js";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen.js";
+import ProductEditScreen from "./screens/ProductEditScreen.js";
+import ProductListScreen from "./screens/ProductListScreen.js";
 import ProductsScreen from "./screens/ProductScreen.js";
 import ProfileScreen from "./screens/ProfileScreen.js";
 import RegisterScreen from "./screens/RegisterScreen.js";
@@ -16,6 +20,7 @@ import { hideLoading, parseRequestUrl, showLoading } from "./utils.js";
 const routes = {
     "/": HomeScreen,
     "/product/:id": ProductsScreen,
+    "/product/:id/edit": ProductEditScreen,
     "/cart/:id": CartScreen,
     "/cart": CartScreen,
     "/signin": SigninScreen,
@@ -25,6 +30,9 @@ const routes = {
     "/payment": PaymentScreen,
     "/placeorder": PlaceOrderScreen,
     "/order/:id": OrderScreen,
+    "/dashboard": DashboardScreen,
+    "/productlist": ProductListScreen,
+    "/orderlist": OrderListScreen,
 }
 
 const router = async () => {

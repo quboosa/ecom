@@ -11,6 +11,7 @@ export default {
             rating: 4.5,
             numReviews: 10,
             countInStock: 6,
+            description: "Good",
 
         },
         {
@@ -23,6 +24,7 @@ export default {
             rating: 4.5,
             numReviews: 10,
             countInStock: 6,
+            description: "Good",
 
         },
         {
@@ -35,6 +37,7 @@ export default {
             rating: 2.5,
             numReviews: 10,
             countInStock: 6,
+            description: "Good",
 
         },
         {
@@ -47,6 +50,7 @@ export default {
             rating: 4.5,
             numReviews: 10,
             countInStock: 6,
+            description: "Good",
 
         },
         {
@@ -59,6 +63,7 @@ export default {
             rating: 4.5,
             numReviews: 10,
             countInStock: 6,
+            description: "Good",
 
         },
         {
@@ -71,6 +76,7 @@ export default {
             rating: 4.5,
             numReviews: 10,
             countInStock: 6,
+            description: "Good",
 
         },
     ]

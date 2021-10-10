@@ -1,18 +1,21 @@
+import { getProducts } from "../api.js";
 import Rating from "../components/rating.js";
 
 const HomeScreen = {
     render: async () => {
-        const response = await fetch("http://localhost:3000/api/products", {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+        // const response = await fetch("http://localhost:3000/api/products", {
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        // });
 
-        // console.log(response);
-        if (!response || !response.ok)
-            return `<div>Error in getting data<div>`;
+        // // console.log(response);
+        // if (!response || !response.ok)
+        //     return `<div>Error in getting data<div>`;
 
-        const products = await response.json();
+        // const products = await response.json();
+        const products = await getProducts();
+        console.log("Check");
         console.log(products);
         return `
         <ul class="products">
@@ -29,7 +32,7 @@ const HomeScreen = {
                     </div>
                     <div class="product-rating">${Rating.render({ value: product.rating, text: product.numReviews + ' reviews' })}</div>
                     <div class="product-brand">${product.brand}</div>
-                    <div class="product-price">${product.price}</div>
+                    <div class="product-price">$${product.price}</div>
                 </li>
             `
         ).join("\n")}
